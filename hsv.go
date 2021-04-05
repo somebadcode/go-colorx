@@ -17,7 +17,9 @@ type HSVA struct {
 	A float64 // Alpha ∈ [0, 1]
 }
 
-var HSVAModel = color.ModelFunc(hsvaModel)
+var (
+	HSVAModel = color.ModelFunc(hsvaModel)
+)
 
 func hsvaModel(c color.Color) color.Color {
 	if _, ok := c.(HSVA); ok {
@@ -49,7 +51,7 @@ func RGBAToHSVA(r, g, b, a uint8) HSVA {
 	cMax = math.Max(red, math.Max(green, blue))
 	cMin = math.Min(red, math.Min(green, blue))
 
-	// Value is derived from the dominant color.
+	// Value is the value of the dominant color.
 	hsva.V = cMax
 
 	// Alpha requires no further transformation.
@@ -63,7 +65,7 @@ func RGBAToHSVA(r, g, b, a uint8) HSVA {
 		hsva.S = delta / cMax
 	}
 
-	// Hue is derived from the most dominant color.
+	// Hue is derived from the dominant color.
 	switch cMax {
 	case cMin: // delta == 0
 		hsva.H = 0.0
@@ -100,6 +102,7 @@ func (hsva HSVA) RGBA() (r, g, b, a uint32) {
 
 	angle = math.Mod(hsva.H+360.0, 360.0)
 
+	// i will be the sextant of the dominant color.
 	i, f = math.Modf(angle / 60.0)
 
 	p = hsva.V * (1.0 - hsva.S)

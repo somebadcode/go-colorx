@@ -159,17 +159,6 @@ func TestRGBToHSV(t *testing.T) {
 	}
 }
 
-func BenchmarkRGBToHSV(b *testing.B) {
-	var red uint8 = 0xBF
-	var green uint8 = 0x0F
-	var blue uint8 = 0x7F
-	b.ReportAllocs()
-
-	for n := 0; n < b.N; n++ {
-		RGBAToHSVA(red, green, blue, 0)
-	}
-}
-
 func TestHSV_RGBA(t *testing.T) {
 	type fields struct {
 		H float64
@@ -349,8 +338,7 @@ func TestHSV_RGBA(t *testing.T) {
 			wantB: 0x7F7F,
 		},
 	}
-	for _, tc := range tests {
-		tt := tc
+	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			hsv := HSVA{
 				H: tt.fields.H,
@@ -374,13 +362,23 @@ func TestHSV_RGBA(t *testing.T) {
 	}
 }
 
+func BenchmarkRGBToHSV(b *testing.B) {
+	var red uint8 = 0xBF
+	var green uint8 = 0x0F
+	var blue uint8 = 0x7F
+
+	for n := 0; n < b.N; n++ {
+		RGBAToHSVA(red, green, blue, 0)
+	}
+}
+
 func BenchmarkHSV_RGBA(b *testing.B) {
 	hsv := HSVA{
 		H: 180,
 		S: 0.5,
 		V: 0.5,
 	}
-	b.ReportAllocs()
+
 	for n := 0; n < b.N; n++ {
 		hsv.RGBA()
 	}
