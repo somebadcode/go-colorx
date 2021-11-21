@@ -4,7 +4,7 @@ import (
 	"image/color"
 	"testing"
 
-	"github.com/somebadcode/go-mathx"
+	"github.com/somebadcode/go-colorx/internal/mathx"
 )
 
 func TestHSVAModel(t *testing.T) {
@@ -56,104 +56,132 @@ func TestRGBToHSV(t *testing.T) {
 		r uint8
 		g uint8
 		b uint8
+		a uint8
 	}
 	tests := []struct {
-		name string
-		args args
-		want HSVA
+		name  string
+		args  args
+		wantH float64
+		wantS float64
+		wantV float64
+		wantA float64
 	}{
 		{
 			name: "black",
 			args: args{},
-			want: HSVA{},
 		},
 		{
-			name: "white",
-			args: args{r: 0xFF, g: 0xFF, b: 0xFF},
-			want: HSVA{V: 1.0},
+			name:  "white",
+			args:  args{r: 0xFF, g: 0xFF, b: 0xFF},
+			wantV: 1.0,
 		},
 		{
-			name: "red",
-			args: args{r: 0xFF},
-			want: HSVA{S: 1.0, V: 1.0},
+			name:  "red",
+			args:  args{r: 0xFF},
+			wantS: 1.0,
+			wantV: 1.0,
 		},
 		{
-			name: "lime",
-			args: args{g: 0xFF},
-			want: HSVA{H: 120.0, S: 1.0, V: 1.0},
+			name:  "lime",
+			args:  args{g: 0xFF},
+			wantH: 120.0,
+			wantS: 1.0,
+			wantV: 1.0,
 		},
 		{
-			name: "blue",
-			args: args{b: 0xFF},
-			want: HSVA{H: 240.0, S: 1.0, V: 1.0},
+			name:  "blue",
+			args:  args{b: 0xFF},
+			wantH: 240.0,
+			wantS: 1.0,
+			wantV: 1.0,
 		},
 		{
-			name: "yellow",
-			args: args{r: 0xFF, g: 0xFF},
-			want: HSVA{H: 60.0, S: 1.0, V: 1.0},
+			name:  "yellow",
+			args:  args{r: 0xFF, g: 0xFF},
+			wantH: 60.0,
+			wantS: 1.0,
+			wantV: 1.0,
 		},
 		{
-			name: "cyan",
-			args: args{g: 0xFF, b: 0xFF},
-			want: HSVA{H: 180.0, S: 1.0, V: 1.0},
+			name:  "cyan",
+			args:  args{g: 0xFF, b: 0xFF},
+			wantH: 180.0,
+			wantS: 1.0,
+			wantV: 1.0,
 		},
 		{
-			name: "magenta",
-			args: args{r: 0xFF, b: 0xFF},
-			want: HSVA{H: 300.0, S: 1.0, V: 1.0},
+			name:  "magenta",
+			args:  args{r: 0xFF, b: 0xFF},
+			wantH: 300.0,
+			wantS: 1.0,
+			wantV: 1.0,
 		},
 		{
-			name: "silver",
-			args: args{r: 0xBF, g: 0xBF, b: 0xBF},
-			want: HSVA{V: 0.75},
+			name:  "silver",
+			args:  args{r: 0xBF, g: 0xBF, b: 0xBF},
+			wantV: 0.75,
 		},
 		{
-			name: "gray",
-			args: args{r: 0x80, g: 0x80, b: 0x80},
-			want: HSVA{V: 0.5},
+			name:  "gray",
+			args:  args{r: 0x80, g: 0x80, b: 0x80},
+			wantV: 0.5,
 		},
 		{
-			name: "maroon",
-			args: args{r: 0x80},
-			want: HSVA{S: 1.0, V: 0.5},
+			name:  "maroon",
+			args:  args{r: 0x80},
+			wantS: 1.0,
+			wantV: 0.5,
 		},
 		{
-			name: "olive",
-			args: args{r: 0x80, g: 0x80},
-			want: HSVA{H: 60.0, S: 1.0, V: 0.5},
+			name:  "olive",
+			args:  args{r: 0x80, g: 0x80},
+			wantH: 60.0,
+			wantS: 1.0,
+			wantV: 0.5,
 		},
 		{
-			name: "green",
-			args: args{g: 0x80},
-			want: HSVA{H: 120.0, S: 1.0, V: 0.5},
+			name:  "green",
+			args:  args{g: 0x80},
+			wantH: 120.0,
+			wantS: 1.0,
+			wantV: 0.5,
 		},
 		{
-			name: "purple",
-			args: args{r: 0x80, b: 0x80},
-			want: HSVA{H: 300.0, S: 1.0, V: 0.5},
+			name:  "purple",
+			args:  args{r: 0x80, b: 0x80},
+			wantH: 300.0,
+			wantS: 1.0,
+			wantV: 0.5,
 		},
 		{
-			name: "teal",
-			args: args{g: 0x80, b: 0x80},
-			want: HSVA{H: 180.0, S: 1.0, V: 0.5},
+			name:  "teal",
+			args:  args{g: 0x80, b: 0x80},
+			wantH: 180.0,
+			wantS: 1.0,
+			wantV: 0.5,
 		},
 		{
-			name: "navy",
-			args: args{b: 0x80},
-			want: HSVA{H: 240.0, S: 1.0, V: 0.5},
+			name:  "navy",
+			args:  args{b: 0x80},
+			wantH: 240.0,
+			wantS: 1.0,
+			wantV: 0.5,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := RGBAToHSVA(tt.args.r, tt.args.g, tt.args.b, 0)
-			if !mathx.EqualP(got.H, tt.want.H, 1e-2) {
-				t.Errorf("RGBAToHSVA() got H = %f, want %f", got.H, tt.want.H)
+			gotH, gotS, gotV, gotA := RGBAToHSVA(tt.args.r, tt.args.g, tt.args.b, tt.args.a)
+			if !mathx.EqualP(gotH, tt.wantH, 1e-2) {
+				t.Errorf("RGBAToHSVA() got H = %f, want %f", gotH, tt.wantH)
 			}
-			if !mathx.EqualP(got.S, tt.want.S, 1e-2) {
-				t.Errorf("RGBAToHSVA() got S = %f, want %f", got.S, tt.want.S)
+			if !mathx.EqualP(gotS, tt.wantS, 1e-2) {
+				t.Errorf("RGBAToHSVA() got S = %f, want %f", gotS, tt.wantS)
 			}
-			if !mathx.EqualP(got.V, tt.want.V, 1e-2) {
-				t.Errorf("RGBAToHSVA() got V = %f, want %f", got.V, tt.want.V)
+			if !mathx.EqualP(gotV, tt.wantV, 1e-2) {
+				t.Errorf("RGBAToHSVA() got V = %f, want %f", gotV, tt.wantV)
+			}
+			if !mathx.EqualP(gotA, tt.wantA, 1e-2) {
+				t.Errorf("RGBAToHSVA() got A = %f, want %f", gotA, tt.wantA)
 			}
 		})
 	}
