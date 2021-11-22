@@ -16,9 +16,8 @@ type HSVA struct {
 	A float64 // Alpha ∈ [0, 1]
 }
 
-var (
-	HSVAModel = color.ModelFunc(hsvaModel)
-)
+// HSVAModel can convert the color to the HSVA color model defined in this package.
+var HSVAModel = color.ModelFunc(hsvaModel)
 
 func hsvaModel(c color.Color) color.Color {
 	if _, ok := c.(HSVA); ok {
@@ -35,7 +34,7 @@ func hsvaModel(c color.Color) color.Color {
 	}
 }
 
-// RGBAToHSVA converts RGBA to HSVA.
+// RGBAToHSVA converts RGBA to Hue, Saturation, Value and Alpha.
 func RGBAToHSVA(r, g, b, a uint8) (float64, float64, float64, float64) {
 	var hue, saturation, value, alpha float64
 

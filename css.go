@@ -8,17 +8,16 @@ import (
 	"strconv"
 )
 
-// CSS is a model for easy use of colors in Cascading Style Sheets.
+// CSS an implementation of the color model used in Cascading Style Sheets.
 type CSS struct {
-	R       uint8
-	G       uint8
-	B       uint8
-	Opacity float64
+	R       uint8   // Red
+	G       uint8   // Green
+	B       uint8   // Blue
+	Opacity float64 // Opacity ∈ [0.0, 1.0]
 }
 
-var (
-	CSSModel = color.ModelFunc(cssModel)
-)
+// CSSModel can convert the color to the CSS color model defined in this package.
+var CSSModel = color.ModelFunc(cssModel)
 
 func cssModel(c color.Color) color.Color {
 	if _, ok := c.(CSS); ok {
@@ -33,6 +32,7 @@ func cssModel(c color.Color) color.Color {
 	}
 }
 
+// RGBA returns the alpha-premultiplied red, green, blue and alpha values for the color.
 func (c CSS) RGBA() (r, g, b, a uint32) {
 	return color.RGBA{
 		R: c.R,
@@ -42,12 +42,13 @@ func (c CSS) RGBA() (r, g, b, a uint32) {
 	}.RGBA()
 }
 
+// SanitizedOpacity returns the absolute value of opacity in the range [0.0, 1.0].
 func (c CSS) SanitizedOpacity() float64 {
 	return math.Min(math.Abs(c.Opacity), 1.0)
 }
 
 // String returns the color in its CSS string format, either "rgb" or "rgba".
-func (c *CSS) String() string {
+func (c CSS) String() string {
 	if c.SanitizedOpacity() < 1.0 {
 		return fmt.Sprintf("rgba(%d,%d,%d,%s)", c.R, c.G, c.B, slimFloatString(c.SanitizedOpacity(), 2))
 	}
@@ -55,7 +56,7 @@ func (c *CSS) String() string {
 }
 
 // HexString returns the color in the hexadecimal format used by CSS.
-func (c *CSS) HexString() string {
+func (c CSS) HexString() string {
 	b := make([]byte, 0, 4)
 	b = append(b, c.R, c.G, c.B)
 
@@ -66,7 +67,7 @@ func (c *CSS) HexString() string {
 	return "#" + hex.EncodeToString(b)
 }
 
-// RGBAToCSS converts Red, Green, Blue and Alpha to Red, Green, Blue and Opacity.
+// RGBAToCSS converts red, green, blue and alpha to red, green, blue and opacity.
 func RGBAToCSS(r, g, b, a uint8) (uint8, uint8, uint8, float64) {
 	return r, g, b, math.Floor((float64(a)/float64(math.MaxUint8))*100.0) / 100.0
 }
