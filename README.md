@@ -1,3 +1,4 @@
+![Lint & Test](https://github.com/somebadcode/go-colorx/actions/workflows/main.yml/badge.svg)
 # colorx
 
 This package implements the following color models:

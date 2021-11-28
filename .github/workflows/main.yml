@@ -1,12 +1,19 @@
-name: Lint
+name: Lint & Test
 
 on:
   push:
+    branches:
+      - main
+    paths-ignore:
+      - '**/*.md'
+  pull_request:
+    branches:
+      - main
     paths-ignore:
       - '**/*.md'
 
 jobs:
-  test:
+  lint-and-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,9 +25,15 @@ jobs:
       - name: Setup Go environment
         run: |
           go mod download
+          go get -t .
 
-      - name: golangci-lint
+      - name: Linting
         uses: golangci/golangci-lint-action@v2
         with:
           version: latest
           skip-go-installation: true
+
+      - name: Unit tests
+        run: |
+          go test ./... -coverprofile coverage.out -covermode atomic
+          go tool cover -func coverage.out
