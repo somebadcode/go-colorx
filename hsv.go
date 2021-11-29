@@ -4,7 +4,7 @@ import (
 	"image/color"
 	"math"
 
-	"github.com/somebadcode/go-colorx/internal/mathx"
+	"github.com/somebadcode/go-colorx/v2/internal/mathx"
 )
 
 // HSVA is an implementation of the HSV (Hue, Saturation and Value) color model. HSV is also known as HSB (Hue,
