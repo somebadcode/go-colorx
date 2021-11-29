@@ -1,5 +1,3 @@
-module github.com/somebadcode/go-colorx
+module github.com/somebadcode/go-colorx/v2
 
-go 1.16
-
-require github.com/somebadcode/go-mathx v1.0.0
+go 1.17
