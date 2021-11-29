@@ -7,10 +7,9 @@ than the default `color.RGBA` model, you can specify or modify the color in a di
 **Import:** `github.com/somebadcode/go-colorx/v2`
 
 ### HSV/HSB - Hue, Saturation, Value/Brightness
-HSV is implemented through the concrete type `HSVA`. The HSV color model was designed to more closely reflect how the
-humans perceive colors and makes it easier to work with colors. You can use HSV to generate gradients or a color
-palette for graphs that are easier to perceive for colorblind users. You can also use this color model to make images
-monochrome or have more saturated colors.
+HSV is implemented through the concrete type `HSVA`. The HSV color model was designed to more closely reflect how
+humans perceive colors. You can use HSV to generate gradients or a color palette for graphs that are easier to perceive
+for colorblind users. You can also use this color model to make images monochrome or have more saturated colors.
 
 ### CSS - Cascading Style Sheets
 A variation of the RGBA color model where the alpha/opacity is stored as a floating point number between 0.0 and 1.0.
