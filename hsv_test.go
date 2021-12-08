@@ -187,6 +187,7 @@ func TestRGBToHSV(t *testing.T) {
 	}
 }
 
+//nolint:dupl // False positives
 func TestHSV_RGBA(t *testing.T) {
 	type fields struct {
 		H float64

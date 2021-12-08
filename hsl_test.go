@@ -225,6 +225,7 @@ func TestRGBToHSLA(t *testing.T) {
 	}
 }
 
+//nolint:dupl // False positives
 func TestHSLA_RGBA(t *testing.T) {
 	type fields struct {
 		H float64
