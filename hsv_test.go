@@ -35,7 +35,7 @@ func TestHSVAModel(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got, ok := HSVAModel.Convert(tt.args.c).(HSVA)
 			if !ok {
-				t.Errorf("HSVAModel.Convert() got V = %T, want %T", got, tt.want)
+				t.Errorf("HSVAModel.Convert() got = %T, want %T", got, tt.want)
 			}
 
 			if !mathx.EqualP(got.H, tt.want.H, 1e-2) {
