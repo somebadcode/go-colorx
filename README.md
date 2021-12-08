@@ -11,6 +11,9 @@ HSV is implemented through the concrete type `HSVA`. The HSV color model was des
 humans perceive colors. You can use HSV to generate gradients or a color palette for graphs that are easier to perceive
 for colorblind users. You can also use this color model to make images monochrome or have more saturated colors.
 
+### HSL - Hue, Saturation, Lightness
+HSL is similar to HSV and can be more useful in some use cases.
+
 ### CSS - Cascading Style Sheets
 A variation of the RGBA color model where the alpha/opacity is stored as a floating point number between 0.0 and 1.0.
 This allows you to work with the colors using the `image/colors` package and convert it to this special color model that
